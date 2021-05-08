@@ -1,0 +1,17 @@
+% !TeX program = lualatex
+
+% Author: Malte, DE7LMS
+% Year: 2021
+% TB305
+\documentclass[convert = false, border=5pt]{standalone}
+\input{../common/settings.tex}
+
+\begin{document}
+\begin{tikzpicture}
+  \draw[line width=4pt]
+    (0,0) -- (.5,0) -- (.5,1.75cm+.5pt) -- (.5,-1.75cm-.5pt)
+    (5,0) -- (4.5,0) -- (4.5,1.75cm+.5pt) -- (4.5,-1.75cm-.5pt);
+  \foreach \y in {1.75,1.5,...,-1.75}
+    \draw[line width=1pt, -{Straight Barb[angle=60:2pt 3]}, shorten >=2pt] (.5,\y) -- +(4,0);
+\end{tikzpicture}
+\end{document}
