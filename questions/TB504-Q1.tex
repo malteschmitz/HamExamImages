@@ -9,17 +9,24 @@
 \begin{document}
 \begin{tikzpicture}[
     thick,
-    >={Triangle[angle=45:1pt 8]}
+    >={Triangle[angle=45:1pt 6]},
+    samples=100,
+    x={(1cm,0.2cm)},
+    y={(0cm,1cm)},
+    z={(0.6cm,-0.2cm)}
   ]
-  % original for comparison
-  % \node[anchor=south] at (.1,-.1) {\includegraphics[width=3cm]{tb_504_q_1.png}};
 
-  \draw[->] (0,0) -- (0,2);
-  \draw[->] (-.3,.3) -- +(0,2) node[right=2mm] {H};
-  \draw[->] (-.6,.6) -- +(0,2);
-  \draw[->] (-.8,.8) -- +(2.2,0);
-  \draw[->] (-1.1,1.1) -- +(2.2,0);
-  \draw[->] (-1.4,1.4) -- +(2.2,0) node[right=4mm] {E};
+  \fill[lightgray] (0,-2.1,-2) -- (2.2*pi,-2.1,-2) -- (2.2*pi,-2.1,2) -- (0,-2.1,2) -- cycle;
+  \node[left] at (2,-2.1,0) {Erde};
+  \draw[thin, draw=gray] (0,0,0) -- (2.2*pi,0,0) node[right] {$S$};
+  \draw[domain=0:2*pi] plot (\x,{2*sin(\x r)}, 0);
+  \draw[domain=0:2*pi] plot (\x, 0, {-2*sin(\x r)});
+  \path (pi/2, {2*sin(pi/2 r)}, 0) node[above] {$H$};
+  \path (pi/3, 0, {-2*sin(pi/3 r)}) node[above left] {$E$};
+  \foreach \i in {1,2,3,4,5,7,8,9,10,11} {
+    \draw[->] (\i*pi/6,0,0) -- (\i*pi/6,{2*sin(\i*pi/6 r)},0);
+    \draw[->] (\i*pi/6,0,0) -- (\i*pi/6,0,{-2*sin(\i*pi/6 r)});
+  }
 \end{tikzpicture}
 
 \end{document}
