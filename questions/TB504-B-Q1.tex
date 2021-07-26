@@ -1,0 +1,32 @@
+% !TeX program = lualatex
+
+% Author: Malte, DE7LMS
+% Year: 2021
+% TB504B
+\documentclass[convert = false, border=5pt]{standalone}
+\input{../common/settings.tex}
+
+\begin{document}
+\begin{tikzpicture}[
+    thick,
+    >={Triangle[angle=45:1pt 6]},
+    samples=100,
+    x={(1cm,0.2cm)},
+    y={(0cm,1cm)},
+    z={(0.6cm,-0.2cm)}
+  ]
+
+  \fill[lightgray] (0,-2.1,-2) -- (2.2*pi,-2.1,-2) -- (2.2*pi,-2.1,2) -- (0,-2.1,2) -- cycle;
+  \node[left] at (2,-2.1,0) {Erde};
+  \draw[draw=gray, ->] (0,0,0) -- (2.2*pi,0,0) node[right] {S};
+  \draw[domain=0:2*pi] plot (\x,{2*sin(\x r)}, 0);
+  \draw[domain=0:2*pi] plot (\x, 0, {-2*sin(\x r)});
+  \path (pi/2, {2*sin(pi/2 r)}, 0) node[above] {E};
+  \path (pi/3, 0, {-2*sin(pi/3 r)}) node[above left] {H};
+  \foreach \i in {1,2,3,4,5,7,8,9,10,11} {
+    \draw[->] (\i*pi/6,0,0) -- (\i*pi/6,{2*sin(\i*pi/6 r)},0);
+    \draw[->] (\i*pi/6,0,0) -- (\i*pi/6,0,{-2*sin(\i*pi/6 r)});
+  }
+\end{tikzpicture}
+
+\end{document}
