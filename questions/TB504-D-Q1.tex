@@ -6,6 +6,14 @@
 \documentclass[convert = false, border=5pt]{standalone}
 \input{../common/settings.tex}
 
+\newcommand{\domain}{6}
+\newcommand{\saxis}[1]{#1/\domain*2, 0, 0}
+\newcommand{\hfield}[1]{#1/\domain*2, {1.5 * -sin(#1 r)}, {1.5 * cos(#1 r)}}
+\newcommand{\efield}[1]{#1/\domain*2, {1.5 * -sin((#1 + pi/2) r)}, {1.5 * cos((#1 + pi/2) r)}}
+\newcommand{\saxisPi}[1]{(\saxis{#1 * pi})}
+\newcommand{\hfieldPi}[1]{(\hfield{#1 * pi})}
+\newcommand{\efieldPi}[1]{(\efield{#1 * pi})}
+
 \begin{document}
 \begin{tikzpicture}[
     thick,
@@ -13,19 +21,20 @@
     samples=500,
     x={(1cm,0.2cm)},
     y={(0cm,1cm)},
-    z={(0.6cm,-0.2cm)}
+    z={(0.6cm,-0.2cm)},
+    domain=0:\domain*pi
   ]
 
-  \fill[lightgray] (0,-2.1,-2) -- (2.2*pi,-2.1,-2) -- (2.2*pi,-2.1,2) -- (0,-2.1,2) -- cycle;
-  \node[left] at (2,-2.1,0) {Erde};
-  \draw[draw=gray, ->] (0,0,0) -- (2.3*pi,0,0) node[right] {S};
-  \draw[domain=0:8*pi] plot (\x/4, {1.5 * -sin(\x r)}, {1.5 * cos(\x r)});
-  \draw[domain=0:8*pi] plot (\x/4, {1.5 * -sin((\x+pi/2) r)}, {1.5 * cos((\x+pi/2) r)});
-  \path (pi * 0.5/4, {1.5 * -sin((pi * 0.5) r)}, {1.5 * cos((pi * 0.5) r)}) node[below] {E};
-  \path (pi * 0.5/4, {1.5 * -sin((pi * 0.5 + pi/2) r)}, {1.5 * cos((pi * 0.5 + pi/2) r)}) node[left] {H};
-  \foreach \x in {0,0.5,1,...,8} {
-    \draw[->] (pi * \x/4,0,0) -- (pi * \x/4, {1.5 * -sin((pi * \x) r)}, {1.5 * cos((pi * \x) r)});
-    \draw[->] (pi * \x/4,0,0) -- (pi * \x/4, {1.5 * -sin((pi * \x + pi/2) r)}, {1.5 * cos((pi * \x + pi/2) r)});
+  \fill[lightgray] (0, -2.1, -2) -- (2.2 * pi, -2.1, -2) -- (2.2 * pi, -2.1, 2) -- (0, -2.1, 2) -- cycle;
+  \node[left] at (2, -2.1, 0) {Erde};
+  \draw[draw=gray, ->] (0, 0, 0) -- (2.35 * pi, 0, 0) node[right] {S};
+  \draw[dash pattern=on 4pt off 2pt] plot (\hfield\x);
+  \draw plot (\efield\x);
+  \path \hfieldPi{0.5} node[below] {H};
+  \path \efieldPi{0.5} node[left] {E};
+  \foreach \x in {0,0.5,1,...,\domain} {
+    \draw[->, dash pattern=on 4pt off 2pt] \saxisPi\x -- \hfieldPi\x;
+    \draw[->] \saxisPi\x -- \efieldPi\x;
   }
 \end{tikzpicture}
 

@@ -6,7 +6,14 @@
 \documentclass[convert = false, border=5pt]{standalone}
 \input{../common/settings.tex}
 
-\newcommand{\domain}{8}
+\newcommand{\domain}{6}
+\newcommand{\saxis}[1]{#1/\domain*2, 0, 0}
+\newcommand{\hfield}[1]{#1/\domain*2, {1.5 * sin(#1 r)}, {1.5 * cos(#1 r)}}
+\newcommand{\efield}[1]{#1/\domain*2, {1.5 * sin((#1 + pi/2) r)}, {1.5 * cos((#1 + pi/2) r)}}
+\newcommand{\saxisPi}[1]{(\saxis{#1 * pi})}
+\newcommand{\hfieldPi}[1]{(\hfield{#1 * pi})}
+\newcommand{\efieldPi}[1]{(\efield{#1 * pi})}
+
 \begin{document}
 \begin{tikzpicture}[
     thick,
@@ -18,17 +25,16 @@
     domain=0:\domain*pi
   ]
 
-  \node at (2.3*pi,1.5,0) {};
-  \fill[lightgray] (0,-2.1,-2) -- (2.2*pi,-2.1,-2) -- (2.2*pi,-2.1,2) -- (0,-2.1,2) -- cycle;
-  \node[left] at (2,-2.1,0) {Erde};
-  \draw[draw=gray, ->] (0,0,0) -- (2.3*pi,0,0) node[right] {S};
-  \draw[dash pattern=on 4pt off 2pt] plot (\x/\domain*2, {1.5 * sin(\x r)}, {1.5 * cos(\x r)});
-  \draw plot (\x/\domain*2, {1.5 * sin((\x+pi/2) r)}, {1.5 * cos((\x+pi/2) r)});
-  \path (pi * 0.5/4, {1.5 * sin((pi * 0.5) r)}, {1.5 * cos((pi * 0.5) r)}) node[above] {H};
-  \path (pi * 0.5/4, {1.5 * sin((pi * 0.5 + pi/2) r)}, {1.5 * cos((pi * 0.5 + pi/2) r)}) node[left] {E};
+  \fill[lightgray] (0, -2.1, -2) -- (2.2 * pi, -2.1, -2) -- (2.2 * pi, -2.1, 2) -- (0, -2.1, 2) -- cycle;
+  \node[left] at (2, -2.1, 0) {Erde};
+  \draw[draw=gray, ->] (0, 0, 0) -- (2.35 * pi, 0, 0) node[right] {S};
+  \draw[dash pattern=on 4pt off 2pt] plot (\hfield\x);
+  \draw plot (\efield\x);
+  \path \hfieldPi{0.5} node[above] {H};
+  \path \efieldPi{0.5} node[left] {E};
   \foreach \x in {0,0.5,1,...,\domain} {
-    \draw[->, dash pattern=on 4pt off 2pt] (pi * \x/\domain*2,0,0) -- (pi * \x/\domain*2, {1.5 * sin((pi * \x) r)}, {1.5 * cos((pi * \x) r)});
-    \draw[->] (pi * \x/\domain*2,0,0) -- (pi * \x/\domain*2, {1.5 * sin((pi * \x + pi/2) r)}, {1.5 * cos((pi * \x + pi/2) r)});
+    \draw[->, dash pattern=on 4pt off 2pt] \saxisPi\x -- \hfieldPi\x;
+    \draw[->] \saxisPi\x -- \efieldPi\x;
   }
 \end{tikzpicture}
 
