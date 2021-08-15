@@ -9,7 +9,7 @@
 \newcommand{\domain}{6}
 \newcommand{\saxis}[1]{#1/\domain*2, 0, 0}
 \newcommand{\hfield}[1]{#1/\domain*2, {1.5 * -sin(#1 r)}, {1.5 * cos(#1 r)}}
-\newcommand{\efield}[1]{#1/\domain*2, {1.5 * -sin((#1 + pi/2) r)}, {1.5 * cos((#1 + pi/2) r)}}
+\newcommand{\efield}[1]{#1/\domain*2, {1.5 * sin((#1 + pi/2) r)}, {1.5 * -cos((#1 + pi/2) r)}}
 \newcommand{\saxisPi}[1]{(\saxis{#1 * pi})}
 \newcommand{\hfieldPi}[1]{(\hfield{#1 * pi})}
 \newcommand{\efieldPi}[1]{(\efield{#1 * pi})}
@@ -31,7 +31,7 @@
   \draw[dash pattern=on 4pt off 2pt] plot (\hfield\x);
   \draw plot (\efield\x);
   \path \hfieldPi{0.5} node[below] {H};
-  \path \efieldPi{0.5} node[left] {E};
+  \path \efieldPi{0.5} node[right] {E};
   \foreach \x in {0,0.5,1,...,\domain} {
     \draw[->, dash pattern=on 4pt off 2pt] \saxisPi\x -- \hfieldPi\x;
     \draw[->] \saxisPi\x -- \efieldPi\x;
