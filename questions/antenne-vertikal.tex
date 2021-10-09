@@ -10,6 +10,7 @@
 
 \newcommand{\lda}{15}
 \newcommand{\topz}{15}
+\newcommand{\towerscale}{0.4}
 
 \begin{tikzpicture}[
     x={(1cm,0cm)},
@@ -17,38 +18,39 @@
     z={(0cm,1cm)},
     line join=round,
     line cap=round,
-    thick
+    line width=1pt,
+    thicker/.style={line width=2pt},
+    blob thick/.style={line width=4pt}
   ]
 
-  \draw[ultra thick]
-    (0,0,2) -- (0,0,10) -- (1/2,{sqrt(3)/6},11)
-    (1,0,2) -- (1,0,10) -- (1/2,{sqrt(3)/6},11)
-    (1/2,{sqrt(3)/2},2) -- (1/2,{sqrt(3)/2},10) -- (1/2,{sqrt(3)/6},11)
-    %
-    (1/2,{sqrt(3)/6},10) -- (1/2,{sqrt(3)/6},\topz)
-    ;
-  \draw
-    (0,0,10) -- (1/2,{sqrt(3)/6},10)
-    (1,0,10) -- (1/2,{sqrt(3)/6},10)
-    (1/2,{sqrt(3)/2},10) -- (1/2,{sqrt(3)/6},10)
-    ;
-  \foreach \z in {2,4,6,8,10}
+  \begin{scope}[scale=\towerscale]
     \draw
-      (0,0,\z) -- (1,0,\z) -- (1/2,{sqrt(3)/2},\z) -- cycle;
-  \foreach \z in {2,4,6,8}
-    \draw
-      (0,0,\z) -- (1,0,\z+2)
-      % (1,0,\z) -- (0,0,\z+2)
-      %
-      (1,0,\z) -- (1/2,{sqrt(3)/2},\z+2)
-      % (1/2,{sqrt(3)/2},\z) -- (1,0,\z+2)
-      %
-      (1/2,{sqrt(3)/2},\z) -- (0,0,\z+2)
-      % (0,0,\z) -- (1/2,{sqrt(3)/2},\z+2)
+      (0,0,2/\towerscale) -- (0,0,10/\towerscale) -- (1,1,11/\towerscale)
+      (0,2,2/\towerscale) -- (0,2,10/\towerscale) -- (1,1,11/\towerscale)
+      (2,2,2/\towerscale) -- (2,2,10/\towerscale) -- (1,1,11/\towerscale)
+      (2,0,2/\towerscale) -- (2,0,10/\towerscale) -- (1,1,11/\towerscale)
       ;
+    \draw[thicker]
+      (1,1,10/\towerscale) -- (1,1,\topz/\towerscale)
+      ;
+    \draw
+      (0,0,10/\towerscale) -- (2,2,10/\towerscale)
+      (2,0,10/\towerscale) -- (0,2,10/\towerscale)
+      ;
+    \foreach \z in {2,4,6,8,10}
+      \draw
+        (0,0,\z/\towerscale) -- (2,0,\z/\towerscale) -- (2,2,\z/\towerscale) -- (0,2,\z/\towerscale) -- cycle;
+    \foreach \z in {2,4,6,8}
+      \draw
+        (0,0,\z/\towerscale) -- (2,0,\z/\towerscale+2/\towerscale)
+        (2,0,\z/\towerscale) -- (2,2,\z/\towerscale+2/\towerscale)
+        (2,2,\z/\towerscale) -- (0,2,\z/\towerscale+2/\towerscale)
+        (0,2,\z/\towerscale) -- (0,0,\z/\towerscale+2/\towerscale)
+        ;
+  \end{scope}
 
-  \begin{scope}[shift={(1/2+.315*\lda,{sqrt(3)/6},\topz)},scale=\lda]
-    \draw[ultra thick]
+  \begin{scope}[shift={(1*\towerscale+.315*\lda,1*\towerscale,\topz)},scale=\lda]
+    \draw[thicker]
       (0,0,0) -- (-.7,0,0);
     \draw[rounded corners=2pt]
       (0,0,-.25) -- (0,0,.25) % R
@@ -57,7 +59,7 @@
       (-.7,0,-.19) -- (-.7,0,.19) % D3
       (-.25,.03,-.22) -- (-.25,0,-.22) -- (-.25,0,.22) -- (-.25,.03,.22) -- cycle % A
     ;
-    \draw[line width=5pt]
+    \draw[blob thick]
       (-.25-.01,0,0) -- (-.25+.01,0,0);
   \end{scope}
 \end{tikzpicture}
