@@ -23,6 +23,12 @@
     blob thick/.style={line width=4pt}
   ]
 
+  % \begin{scope}
+  %   \clip (-7,0,1.5) rectangle (7.5,0,18);
+  %   \foreach \i in {-7,-6.7,...,26}
+  %     \draw[red, thin] (-100, 0, -100+\i) -- (100, 0, 100+\i);
+  % \end{scope}
+
   \begin{scope}[scale=\towerscale]
     \draw
       (0,0,2/\towerscale) -- (0,0,10/\towerscale) -- (1,1,11/\towerscale)
@@ -52,7 +58,7 @@
   \begin{scope}[shift={(1*\towerscale+.315*\lda,1*\towerscale,\topz)},scale=\lda]
     \draw[ultra thick]
       (0,0,0) -- (-.7,0,0);
-    \draw[rounded corners=2pt]
+    \draw[rounded corners=2.2mm]
       (0,-.25,0) -- (0,.25,0) % R
       (-.38,-.21,0) -- (-.38,.21,0) % D1
       (-.51,-.20,0) -- (-.51,.20,0) % D2
